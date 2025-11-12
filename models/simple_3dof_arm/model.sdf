@@ -1,0 +1,280 @@
+<?xml version='1.0'?>
+<sdf version='1.6'>
+  <model name='simple_3dof_arm'>
+    <static>false</static>
+
+    <!-- Base link (visual only, static in world) -->
+    <link name='base_link'>
+      <pose>0 0 0.04 0 0 0</pose>
+      <inertial>
+        <mass>5.0</mass>
+        <inertia>
+          <ixx>0.1</ixx>
+          <iyy>0.1</iyy>
+          <izz>0.1</izz>
+        </inertia>
+      </inertial>
+      <visual name='base_visual'>
+        <cast_shadows>1</cast_shadows>
+        <geometry>
+          <cylinder>
+            <radius>0.12</radius>
+            <length>0.08</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/DarkGrey</name>
+          </script>
+        </material>
+      </visual>
+      <collision name='base_collision'>
+        <geometry>
+          <cylinder>
+            <radius>0.12</radius>
+            <length>0.08</length>
+          </cylinder>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- Shoulder link (attached via base rotation joint) -->
+    <link name='shoulder_link'>
+      <inertial>
+        <mass>2.0</mass>
+        <inertia>
+          <ixx>0.02</ixx>
+          <iyy>0.02</iyy>
+          <izz>0.02</izz>
+        </inertia>
+      </inertial>
+      <visual name='shoulder_visual'>
+        <pose>0 0 0.18 0 0 0</pose>
+        <cast_shadows>1</cast_shadows>
+        <geometry>
+          <box>
+            <size>0.1 0.08 0.36</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Orange</name>
+          </script>
+        </material>
+      </visual>
+      <collision name='shoulder_collision'>
+        <pose>0 0 0.18 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.1 0.08 0.36</size>
+          </box>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- Elbow link -->
+    <link name='elbow_link'>
+      <inertial>
+        <mass>1.5</mass>
+        <inertia>
+          <ixx>0.01</ixx>
+          <iyy>0.01</iyy>
+          <izz>0.01</izz>
+        </inertia>
+      </inertial>
+      <visual name='elbow_visual'>
+        <pose>0 0 0.16 0 0 0</pose>
+        <cast_shadows>1</cast_shadows>
+        <geometry>
+          <box>
+            <size>0.08 0.06 0.32</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Green</name>
+          </script>
+        </material>
+      </visual>
+      <collision name='elbow_collision'>
+        <pose>0 0 0.16 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.08 0.06 0.32</size>
+          </box>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- Wrist / end link (camera mounted here) -->
+    <link name='wrist_link'>
+      <inertial>
+        <mass>0.5</mass>
+        <inertia>
+          <ixx>0.005</ixx>
+          <iyy>0.005</iyy>
+          <izz>0.005</izz>
+        </inertia>
+      </inertial>
+      <visual name='wrist_visual'>
+        <pose>0 0 0.06 0 0 0</pose>
+        <cast_shadows>1</cast_shadows>
+        <geometry>
+          <sphere>
+            <radius>0.05</radius>
+          </sphere>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Yellow</name>
+          </script>
+        </material>
+      </visual>
+      <collision name='wrist_collision'>
+        <geometry>
+          <sphere>
+            <radius>0.05</radius>
+          </sphere>
+        </geometry>
+      </collision>
+
+      <!-- Camera sensor mounted on wrist_link -->
+      <sensor name='wrist_camera' type='camera'>
+        <always_on>1</always_on>
+        <update_rate>30</update_rate>
+        <pose>0 0 0.08 0 0 0</pose>
+        <camera>
+          <horizontal_fov>0.785398</horizontal_fov>
+          <image>
+            <width>640</width>
+            <height>480</height>
+            <format>R8G8B8</format>
+          </image>
+          <clip>
+            <near>0.01</near>
+            <far>100</far>
+          </clip>
+        </camera>
+        <visualize>true</visualize>
+      </sensor>
+    </link>
+
+    <!-- Simple two-finger gripper (fixed-ish) -->
+    <link name='left_finger'>
+      <visual name='lf_visual'>
+        <pose>0.06 0 0 0 0 0</pose>
+        <cast_shadows>1</cast_shadows>
+        <geometry>
+          <box>
+            <size>0.08 0.02 0.12</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Grey</name>
+          </script>
+        </material>
+      </visual>
+      <collision name='lf_collision'>
+        <pose>0.06 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.08 0.02 0.12</size>
+          </box>
+        </geometry>
+      </collision>
+    </link>
+    <link name='right_finger'>
+      <visual name='rf_visual'>
+        <pose>-0.06 0 0 0 0 0</pose>
+        <cast_shadows>1</cast_shadows>
+        <geometry>
+          <box>
+            <size>0.08 0.02 0.12</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Grey</name>
+          </script>
+        </material>
+      </visual>
+      <collision name='rf_collision'>
+        <pose>-0.06 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.08 0.02 0.12</size>
+          </box>
+        </geometry>
+      </collision>
+    </link>
+
+    <!-- Joints -->
+    <joint name='joint_base' type='revolute'>
+      <parent>base_link</parent>
+      <child>shoulder_link</child>
+      <pose>0 0 0 0 0 0</pose>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <limit>
+          <lower>-3.14159</lower>
+          <upper>3.14159</upper>
+        </limit>
+        <dynamics>
+          <damping>0.5</damping>
+        </dynamics>
+      </axis>
+    </joint>
+
+    <joint name='joint_shoulder' type='revolute'>
+      <parent>shoulder_link</parent>
+      <child>elbow_link</child>
+      <pose>0 0 0 0 0 0</pose>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1.57</lower>
+          <upper>1.57</upper>
+        </limit>
+        <dynamics>
+          <damping>0.2</damping>
+        </dynamics>
+      </axis>
+    </joint>
+
+    <joint name='joint_elbow' type='revolute'>
+      <parent>elbow_link</parent>
+      <child>wrist_link</child>
+      <pose>0 0 0 0 0 0</pose>
+      <axis>
+        <xyz>0 1 0</xyz>
+        <limit>
+          <lower>-1.57</lower>
+          <upper>1.57</upper>
+        </limit>
+        <dynamics>
+          <damping>0.2</damping>
+        </dynamics>
+      </axis>
+    </joint>
+
+    <!-- Fixed joints for fingers to wrist (easy simple gripper). You can later change to actuated joints -->
+    <joint name='joint_left_finger' type='fixed'>
+      <parent>wrist_link</parent>
+      <child>left_finger</child>
+      <pose>0 0.03 0.08 0 0 0</pose>
+    </joint>
+    <joint name='joint_right_finger' type='fixed'>
+      <parent>wrist_link</parent>
+      <child>right_finger</child>
+      <pose>0 -0.03 0.08 0 0 0</pose>
+    </joint>
+
+  </model>
+</sdf>
