@@ -213,30 +213,30 @@
       </link>
     </model>
 
-    <!-- Spawn the robot model -->
+    <!-- Spawn the robot model (positioned at edge of table for easy reach) -->
     <include>
       <uri>model://simple_3dof_arm</uri>
-      <pose>0 0 0 0 0 0</pose>
+      <pose>0.15 0 0 0 0 0</pose>
     </include>
 
-    <!-- Attractive target cube with glossy red finish -->
+    <!-- Attractive target cube with glossy red finish (BIGGER and closer) -->
     <model name="cube_object">
       <static>false</static>
       <link name="box_link">
-        <pose>0.5 0.15 0.075 0 0 0</pose>
+        <pose>0.45 0.15 0.1 0 0 0</pose>
         <inertial>
-          <mass>0.15</mass>
+          <mass>0.2</mass>
           <inertia>
-            <ixx>0.000375</ixx>
-            <iyy>0.000375</iyy>
-            <izz>0.000375</izz>
+            <ixx>0.000667</ixx>
+            <iyy>0.000667</iyy>
+            <izz>0.000667</izz>
           </inertia>
         </inertial>
         <visual name="box_visual">
           <cast_shadows>1</cast_shadows>
           <geometry>
             <box>
-              <size>0.05 0.05 0.05</size>
+              <size>0.08 0.08 0.08</size>
             </box>
           </geometry>
           <material>
@@ -249,7 +249,7 @@
         <collision name="box_collision">
           <geometry>
             <box>
-              <size>0.05 0.05 0.05</size>
+              <size>0.08 0.08 0.08</size>
             </box>
           </geometry>
           <surface>
@@ -267,20 +267,20 @@
       </link>
     </model>
     
-    <!-- Add some extra objects for visual interest -->
+    <!-- Blue cylinder (BIGGER and closer) -->
     <model name="cylinder_object">
       <static>false</static>
-      <pose>0.5 -0.2 0.075 0 0 0</pose>
+      <pose>0.45 -0.2 0.09 0 0 0</pose>
       <link name="cyl_link">
         <inertial>
-          <mass>0.2</mass>
+          <mass>0.25</mass>
         </inertial>
         <visual name="cyl_visual">
           <cast_shadows>1</cast_shadows>
           <geometry>
             <cylinder>
-              <radius>0.03</radius>
-              <length>0.1</length>
+              <radius>0.05</radius>
+              <length>0.12</length>
             </cylinder>
           </geometry>
           <material>
@@ -293,26 +293,27 @@
         <collision name="cyl_collision">
           <geometry>
             <cylinder>
-              <radius>0.03</radius>
-              <length>0.1</length>
+              <radius>0.05</radius>
+              <length>0.12</length>
             </cylinder>
           </geometry>
         </collision>
       </link>
     </model>
     
+    <!-- Green sphere (BIGGER and closer) -->
     <model name="sphere_object">
       <static>false</static>
-      <pose>0.65 0 0.065 0 0 0</pose>
+      <pose>0.6 0 0.09 0 0 0</pose>
       <link name="sphere_link">
         <inertial>
-          <mass>0.1</mass>
+          <mass>0.15</mass>
         </inertial>
         <visual name="sphere_visual">
           <cast_shadows>1</cast_shadows>
           <geometry>
             <sphere>
-              <radius>0.03</radius>
+              <radius>0.05</radius>
             </sphere>
           </geometry>
           <material>
@@ -325,7 +326,7 @@
         <collision name="sphere_collision">
           <geometry>
             <sphere>
-              <radius>0.03</radius>
+              <radius>0.05</radius>
             </sphere>
           </geometry>
         </collision>
